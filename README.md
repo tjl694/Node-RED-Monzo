@@ -15,3 +15,20 @@ In order to get OAuth credentials for monzo-python:
 4. Enter the "Redirect URL" as the 'localhost'
 5. Select "Confidential" from the Confidentiality dropdown box.
 6. Click "Submit" and make a note of the newly created client id and secret, you will need this for your Node-RED configuration.
+
+
+## TODO:
+- [x] Setup project
+
+### Flows to add:
+- [ ] Get token
+- [ ] Get account/pot details
+- [ ] Get balance
+- [ ] Add leftover money to pot
+
+### Docs to add:
+- [x] Add Developer App setup
+- [ ] Get token
+- [ ] Get account/pot details
+- [ ] Get balance
+- [ ] Add leftover money to pot

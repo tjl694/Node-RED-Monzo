@@ -1,0 +1,136 @@
+[
+    {
+        "id": "e05c7097.77c6c",
+        "type": "inject",
+        "z": "db2f1767.30f1e8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "b8742906.5632b8"
+            ]
+        ]
+    },
+    {
+        "id": "b8742906.5632b8",
+        "type": "function",
+        "z": "db2f1767.30f1e8",
+        "name": "",
+        "func": "var clientId = \"Your client id here\";\nvar clientSecret = \"Your client secret here\";\n\nmsg.url = \"https://api.monzo.com/oauth2/token/\";\nmsg.method = 'POST';\n\nif (msg.payload.includes(\"http\")){\n    var token = msg.payload.split(\"=\");\n    token = token[1].split(\"&\");\n    token = token[0];\n}\n\nflow.set(\"client_id\",clientId);\nflow.set(\"client_secret\",encodeURIComponent(clientSecret));\n\nmsg.headers={};\nmsg.headers[\"content-type\"] = \"application/x-www-form-urlencoded\";\n\nvar credentials = [\"grant_type=authorization_code\",\"client_id=\" + flow.get(\"client_id\"),\"client_secret=\" + flow.get(\"client_secret\"),\"redirect_uri=\" + encodeURIComponent(\"http://localhost\"),\"code=\" + token];\n\nmsg.payload = credentials[0] + \"&\" + credentials[1] + \"&\" +credentials[2] + \"&\" +credentials[3] + \"&\" +credentials[4];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "57fd8bb.a9da474"
+            ]
+        ]
+    },
+    {
+        "id": "57fd8bb.a9da474",
+        "type": "http request",
+        "z": "db2f1767.30f1e8",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 490,
+        "y": 160,
+        "wires": [
+            [
+                "9c902443.9a86c8"
+            ]
+        ]
+    },
+    {
+        "id": "9c902443.9a86c8",
+        "type": "json",
+        "z": "db2f1767.30f1e8",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 650,
+        "y": 160,
+        "wires": [
+            [
+                "a30bd1de.9b8a9"
+            ]
+        ]
+    },
+    {
+        "id": "d0849893.05ccd8",
+        "type": "delay",
+        "z": "db2f1767.30f1e8",
+        "name": "",
+        "pauseType": "delayv",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 900,
+        "y": 160,
+        "wires": [
+            [
+                "8e74e14b.9dd48"
+            ]
+        ]
+    },
+    {
+        "id": "a30bd1de.9b8a9",
+        "type": "function",
+        "z": "db2f1767.30f1e8",
+        "name": "",
+        "func": "if (msg.statusCode == 200){\n    msg.refresh_token = msg.payload.refresh_token;\n    msg.delay = msg.payload.expires_in * 1000;\n    global.set(\"monzoToken\",msg.payload.access_token);\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 770,
+        "y": 160,
+        "wires": [
+            [
+                "d0849893.05ccd8"
+            ]
+        ]
+    },
+    {
+        "id": "88e901f7.43f9a",
+        "type": "comment",
+        "z": "db2f1767.30f1e8",
+        "name": "Get Monzo token",
+        "info": "",
+        "x": 180,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "8e74e14b.9dd48",
+        "type": "function",
+        "z": "db2f1767.30f1e8",
+        "name": "",
+        "func": "msg.url = \"https://api.monzo.com/oauth2/token/\";\nmsg.method = 'POST';\n\nmsg.headers={};\nmsg.headers[\"content-type\"] = \"application/x-www-form-urlencoded\";\n\nvar credentials = [\"grant_type=refresh_token\",\"client_id=\" + flow.get(\"client_id\"),\"client_secret=\" + flow.get(\"client_secret\"),\"refresh_token=\" + msg.refresh_token];\n\nmsg.payload = credentials[0] + \"&\" + credentials[1] + \"&\" +credentials[2] + \"&\" +credentials[3];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1030,
+        "y": 160,
+        "wires": [
+            [
+                "57fd8bb.a9da474"
+            ]
+        ]
+    }
+]

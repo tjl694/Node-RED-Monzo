@@ -32,7 +32,7 @@ This will automatically keep refreshing your token. You'll only ever have to red
 - [ ] Add leftover money to pot
 
 ### Docs to add:
-- [x] Add Developer App setup
+- [x] [Add Developer App setup](#getting-oauth-credentials)
 - [x] [Get token](#getting-the-token)
 - [ ] Get account/pot details
 - [ ] Get balance

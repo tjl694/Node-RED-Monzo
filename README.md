@@ -16,19 +16,24 @@ In order to get OAuth credentials for monzo-python:
 5. Select "Confidential" from the Confidentiality dropdown box.
 6. Click "Submit" and make a note of the newly created client id and secret, you will need this for your Node-RED configuration.
 
+## Getting the token
+After adding the flow in [Get-Token](Get-Token.json), open up the first _function_ node and add in your Client ID and Secret to the variables at the start.
+Initalise a Monzo login through the app you created earlier, go to your email, copy the link from the 'Login' button of the Monzo email and paste it within the Inject node.
+Once that's done, deploy the flow and click the inject button on the inject node.
+This will automatically keep refreshing your token. You'll only ever have to redo this if your Node-RED instance is stopped for whatever reason.
 
 ## TODO:
 - [x] Setup project
 
 ### Flows to add:
-- [ ] Get token
+- [x] [Get token](Get-Token.json)
 - [ ] Get account/pot details
 - [ ] Get balance
 - [ ] Add leftover money to pot
 
 ### Docs to add:
 - [x] Add Developer App setup
-- [ ] Get token
+- [x] Get token
 - [ ] Get account/pot details
 - [ ] Get balance
 - [ ] Add leftover money to pot

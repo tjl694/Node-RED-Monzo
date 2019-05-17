@@ -33,7 +33,7 @@ This will automatically keep refreshing your token. You'll only ever have to red
 
 ### Docs to add:
 - [x] Add Developer App setup
-- [x] [Get token](https://github.com/tjl694/Node-RED-Monzo/blob/master/README.md#getting-the-token)
+- [x] [Get token](#getting-the-token)
 - [ ] Get account/pot details
 - [ ] Get balance
 - [ ] Add leftover money to pot
